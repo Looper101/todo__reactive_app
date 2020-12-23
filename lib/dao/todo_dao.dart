@@ -17,6 +17,7 @@ class TodoDao {
     final db = await dbProvider.database;
     var result = await db.delete('todoTABLE', where: "id =?", whereArgs: [id]);
     print("delete $result");
+    return result;
   }
 
   // //Delete all todo
@@ -33,19 +34,18 @@ class TodoDao {
 
     List<Map<String, dynamic>> result;
 
-    // if (query != null) {
-    //   if (query.length > 0) {
-    //     result = await db.query('todoTABLE',
-    //         columns: columns,
-    //         where: 'description LIKE?',
-    //         whereArgs: ["%$query%"]);
-    //   } else {
-    //     result = await db.query(
-    //       'todoTABLE',
-    //       columns: columns,
-    //     );
-    //   }
-    // }
+    if (query != null) {
+      result = await db.query('todoTABLE',
+          columns: columns,
+          where: 'description LIKE ?',
+          whereArgs: ["%$query%"]);
+    } else {
+      result = await db.query(
+        'todoTABLE',
+        columns: columns,
+      );
+    }
+
     result = await db.query(
       'todoTABLE',
       columns: columns,
@@ -53,7 +53,7 @@ class TodoDao {
     List<Todo> todos = result.isNotEmpty
         ? result.map((e) => Todo.fromDatabase(e)).toList()
         : [];
-    print("get all todos : $todos");
+
     return todos;
   }
 
@@ -66,13 +66,13 @@ class TodoDao {
       where: "id =?",
       whereArgs: [todo.id],
     );
-
+    print("update: $result");
     return result;
   }
 
   Future queryDb() async {
     final db = await dbProvider.database;
     var result = await db.query('todoTABLE');
-    print(result);
+    print("QUERY : $result");
   }
 }

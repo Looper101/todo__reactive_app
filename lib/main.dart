@@ -14,9 +14,8 @@ class MyApp extends StatelessWidget {
       create: (context) => TodoBloc(),
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.light(),
         home: HomePage(),
       ),
     );
