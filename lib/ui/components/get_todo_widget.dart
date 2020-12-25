@@ -10,7 +10,9 @@ Widget getTodosWidget(BuildContext context) {
       List<Todo> todoList = snapshot.data;
 
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return CircularProgressIndicator();
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       }
       if (snapshot.hasData) {
         return snapshot.data.length != 0
@@ -49,6 +51,9 @@ Widget getTodosWidget(BuildContext context) {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: ListTile(
+                        subtitle: Text(todo.addDate.toString(),
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold)),
                         leading: GestureDetector(
                           onTap: () {
                             todo.isDone = !todo.isDone;

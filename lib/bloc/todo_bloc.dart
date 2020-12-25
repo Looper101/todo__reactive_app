@@ -37,3 +37,6 @@ class TodoBloc {
     _todoController.close();
   }
 }
+
+//TODO: add a method(Stream) that run a function every two seconds
+// The function will fetch date difference every now and then

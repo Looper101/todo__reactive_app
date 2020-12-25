@@ -66,6 +66,7 @@ showAddTodoSheet(BuildContext context) {
                               if (_descriptionController.text.length >= 0) {
                                 final newTodo = Todo(
                                   description: _descriptionController.text,
+                                  addDate: DateTime.now().toString(),
                                 );
 
                                 Provider.of<TodoBloc>(context, listen: false)

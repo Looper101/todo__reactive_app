@@ -7,7 +7,9 @@ class TodoRepository {
   Future<List<Todo>> getAllTodo({String query}) async =>
       await todoDao.getTodos(query: query);
 
-  Future<int> insertTodo(Todo todo) async => await todoDao.createTodo(todo);
+  Future<int> insertTodo(Todo todo) async {
+    await todoDao.createTodo(todo);
+  }
 
   Future<int> updateTodo(Todo todo) async => await todoDao.updateTodo(todo);
   Future<int> deleteTodo(int id) async => await todoDao.deleteTodo(id);

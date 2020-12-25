@@ -1,3 +1,4 @@
+import 'package:sqflite/sql.dart';
 import 'package:todo_stream/database/database.dart';
 import 'package:todo_stream/model/todo.dart';
 
@@ -7,9 +8,10 @@ class TodoDao {
 //Add new todo record
   Future createTodo(Todo todo) async {
     final db = await dbProvider.database;
-    var result = await db.insert('todoTABLE', todo.toDatabaseJson());
+    var result = await db.insert('todoTABLE', todo.toDatabaseJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
     print("create $result");
-    // return result;
+    return result;
   }
 
 //delete todo record using it's id
@@ -60,14 +62,21 @@ class TodoDao {
   Future<int> updateTodo(Todo todo) async {
     final db = await dbProvider.database;
 
-    var result = await db.update(
-      'todoTABLE',
-      todo.toDatabaseJson(),
-      where: "id =?",
-      whereArgs: [todo.id],
-    );
-    print("update: $result");
-    return result;
+    try {
+      var result = await db.update(
+        'todoTABLE',
+        todo.toDatabaseJson(),
+        where: "id =?",
+        whereArgs: [todo.id],
+
+        // conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+
+      print("update: $result");
+      return result;
+    } catch (e, stacktrace) {
+      print('errorMessage: $e ---stacktrace : $stacktrace');
+    }
   }
 
   Future queryDb() async {

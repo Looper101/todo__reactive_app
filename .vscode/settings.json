@@ -1,3 +1,4 @@
 {
-    "editor.fontFamily": "Hasklig"
+    "editor.fontFamily": "Hasklig",
+    "editor.fontSize": 15
 }

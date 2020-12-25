@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
           elevation: 5.0,
           child: Icon(Icons.add, color: Colors.white),
           onPressed: () {
-            Provider.of<TodoBloc>(context, listen: false).queryb();
             showAddTodoSheet(context);
           },
         ),
@@ -53,7 +52,8 @@ class _HomePageState extends State<HomePage> {
           ),
           onPressed: () {
             //just re-pull UI for testing purposes
-            Provider.of<TodoBloc>(context, listen: false).getTodo();
+            Provider.of<TodoBloc>(context, listen: false).queryb();
+            // Provider.of<TodoBloc>(context, listen: false).getTodo();
           },
         ),
         title: Text(
