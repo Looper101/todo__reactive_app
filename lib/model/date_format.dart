@@ -4,7 +4,7 @@ class DateFormatModel {
   //This method converts DateTime to String
   static String dateFormatter(DateTime dateTime) {
     DateTime today = DateTime.now().toLocal();
-    DateTime justnow = today.subtract(Duration(minutes: 1));
+    // DateTime justnow = today.subtract(Duration(minutes: 1));
     DateTime localDate = dateTime.toLocal();
     DateFormat('jm');
     //just today
@@ -20,38 +20,37 @@ class DateFormatModel {
       print(roughString);
 
       return roughString;
-    } else {
-      return localDate.day.toString();
     }
 //yesterday
-    // DateTime yesterday = today.subtract(Duration(days: 1));
+    DateTime yesterday = today.subtract(Duration(days: 1));
 
-    // if (localDate.day == yesterday.day &&
-    //     localDate.month == yesterday.month &&
-    //     localDate.year == yesterday.year) {
-    //   return 'Yesterday';
-    // }
+    if (localDate.day == yesterday.day &&
+        localDate.month == yesterday.month &&
+        localDate.year == yesterday.year) {
+      return 'Yesterday';
+    }
 
     //weekday
-    // if (today.difference(localDate).inDays > 4 &&
-    //     today.month == localDate.month &&
-    //     today.year == localDate.year) {
-    //   String weekDay = DateFormat('EEEE').format(localDate);
-    //   print('week : $weekDay');
-    //   return 'week ago';
-    // }
+    if (today.difference(localDate).inDays > 4 &&
+        today.month == localDate.month &&
+        today.year == localDate.year) {
+      String weekDay = DateFormat('EEEE').format(localDate);
+      print('week : $weekDay');
+      return 'week ago';
+    }
 
-    // if (today.difference(localDate).inDays > 30 &&
-    //     localDate.month == today.month &&
-    //     localDate.year == today.year) {
-    //   return 'month ago';
-    // }
+    if (today.difference(localDate).inDays > 30 &&
+        localDate.month == today.month &&
+        localDate.year == today.year) {
+      return 'month ago';
+    }
 
-    // if (today.difference(localDate).inDays > 32 && localDate.year == today.year) {
-    //   Duration weeks = today.difference(localDate);
-    //   var daysToWeek = (weeks.inDays ~/ 7);
-    //   return '$daysToWeek weeks ago';
-    // }
+    if (today.difference(localDate).inDays > 32 &&
+        localDate.year == today.year) {
+      Duration weeks = today.difference(localDate);
+      var daysToWeek = (weeks.inDays ~/ 7);
+      return '$daysToWeek weeks ago';
+    }
   }
 }
 

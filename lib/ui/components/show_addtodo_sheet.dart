@@ -63,7 +63,7 @@ showAddTodoSheet(BuildContext context) {
                               color: Colors.white,
                             ),
                             onPressed: () {
-                              if (_descriptionController.text.length >= 0) {
+                              if (_descriptionController.text.length > 0) {
                                 final newTodo = Todo(
                                   description: _descriptionController.text,
                                   addDate: DateTime.now().toString(),

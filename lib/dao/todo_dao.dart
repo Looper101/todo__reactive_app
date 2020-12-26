@@ -59,7 +59,9 @@ class TodoDao {
 
     //manipulate evry todos in the todosList above..
     print(todos);
-    return manipulate(todos);
+    // return manipulate(todos);
+
+    return todos;
   }
 
   Future<int> updateTodo(Todo todo) async {
@@ -79,6 +81,7 @@ class TodoDao {
       return result;
     } catch (e, stacktrace) {
       print('errorMessage: $e ---stacktrace : $stacktrace');
+      return null;
     }
   }
 
@@ -95,30 +98,5 @@ class TodoDao {
       'todoTABLE',
       where: '1',
     );
-  }
-
-  List<Todo> manipulate(List<Todo> todox) {
-    List<Todo> manipulatedTodo = todox
-        .asMap()
-        .map((i, value) => MapEntry(
-            i,
-            Todo(
-                id: value.id,
-                //add the function here
-                addDate: fixIncomingDateFromDb(value.addDate),
-                description: value.description,
-                isDone: value.isDone)))
-        .values
-        .toList();
-
-    return manipulatedTodo;
-  }
-
-  fixIncomingDateFromDb(String date) {
-    DateTime dt = DateTime.parse(date);
-
-    String formatedDate = DateFormatModel.dateFormatter(dt);
-
-    return formatedDate;
   }
 }

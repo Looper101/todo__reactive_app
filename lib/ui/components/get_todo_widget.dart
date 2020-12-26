@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_stream/bloc/todo_bloc.dart';
+import 'package:todo_stream/model/date_parser.dart';
 import 'package:todo_stream/model/todo.dart';
 
 Widget getTodosWidget(BuildContext context) {
@@ -51,7 +52,8 @@ Widget getTodosWidget(BuildContext context) {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: ListTile(
-                        subtitle: Text(todo.addDate,
+                        subtitle: Text(
+                            DateParser.fixIncomingDateFromDb(todo.addDate),
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold)),
                         leading: GestureDetector(

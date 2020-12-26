@@ -1,10 +1,8 @@
-import 'date_format.dart';
-
 class Todo {
   final int id;
   final String description;
   bool isDone = false;
-  String addDate;
+  final String addDate;
 
   Todo({
     this.id,
