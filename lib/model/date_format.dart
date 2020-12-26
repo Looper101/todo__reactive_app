@@ -7,6 +7,7 @@ class DateFormatModel {
     // DateTime justnow = today.subtract(Duration(minutes: 1));
     DateTime localDate = dateTime.toLocal();
     DateFormat('jm');
+
     //just today
 //       if (!localDate.difference(justnow).isNegative) {
 //         return 'justnow';
