@@ -40,18 +40,18 @@ class TodoDao {
     if (query != null) {
       result = await db.query('todoTABLE',
           columns: columns,
+          orderBy: 'id DESC',
           where: 'description LIKE ?',
           whereArgs: ["%$query%"]);
     } else {
-      result = await db.query(
-        'todoTABLE',
-        columns: columns,
-      );
+      result =
+          await db.query('todoTABLE', columns: columns, orderBy: 'id DESC');
     }
 
     result = await db.query(
       'todoTABLE',
       columns: columns,
+      orderBy: 'id DESC',
     );
     List<Todo> todos = result.isNotEmpty
         ? result.map((e) => Todo.fromDatabase(e)).toList()
