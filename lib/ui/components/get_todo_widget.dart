@@ -46,7 +46,8 @@ Widget getTodosWidget(BuildContext context) {
                       return null;
                     },
                     child: Card(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin:
+                          EdgeInsets.only(top: index == 0 ? 10 : 5, bottom: 5),
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),

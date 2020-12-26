@@ -4,16 +4,22 @@ class DateFormatModel {
   //This method converts DateTime to String
   static String dateFormatter(DateTime dateTime) {
     DateTime today = DateTime.now().toLocal();
-    // DateTime justnow = today.subtract(Duration(minutes: 1));
+    DateTime justnow = today.subtract(Duration(minutes: 1));
     DateTime localDate = dateTime.toLocal();
     DateFormat('jm');
 
     //just today
-//       if (!localDate.difference(justnow).isNegative) {
-//         return 'justnow';
-//       }
-// //today
+    if (!localDate.difference(justnow).isNegative) {
+      return 'justnow';
+    }
 
+// minutes ago--
+    Duration minutesago = today.difference(dateTime);
+    if (minutesago.inMinutes >= 2) {
+      return "${minutesago.inMinutes.toString()} min ago";
+    }
+
+// //today
     String roughString = DateFormat('jm').format(dateTime);
     if (localDate.day == today.day &&
         localDate.month == today.month &&

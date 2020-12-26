@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_stream/bloc/todo_bloc.dart';
 // import 'package:todo_stream/database/database.dart';
-import 'package:todo_stream/model/todo.dart';
-
 import 'components/get_todo_widget.dart';
 import 'components/show_addtodo_sheet.dart';
 
@@ -30,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.93),
       floatingActionButton: Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 10),
