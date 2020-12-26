@@ -51,7 +51,7 @@ Widget getTodosWidget(BuildContext context) {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: ListTile(
-                        subtitle: Text(todo.addDate.toString(),
+                        subtitle: Text(todo.addDate,
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold)),
                         leading: GestureDetector(

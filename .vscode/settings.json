@@ -1,4 +1,8 @@
 {
     "editor.fontFamily": "Hasklig",
-    "editor.fontSize": 15
+    "editor.fontSize": 15,
+    "editor.fontLigatures": true,
+    "editor.fontWeight": "normal",
+
+    
 }

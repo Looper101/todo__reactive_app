@@ -33,6 +33,11 @@ class TodoBloc {
     await _todoRepository.queryDb();
   }
 
+  clearDb() async {
+    await _todoRepository.clearDb();
+    await queryb();
+  }
+
   dispose() {
     _todoController.close();
   }

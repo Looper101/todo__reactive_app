@@ -1,79 +1,82 @@
 import 'package:intl/intl.dart';
 
 class DateFormatModel {
-  String dateFormatter(DateTime dateTime) {
-    DateTime now = DateTime.now();
-    DateTime justNow = now.subtract(Duration(minutes: 1));
+  //This method converts DateTime to String
+  static String dateFormatter(DateTime dateTime) {
+    DateTime today = DateTime.now().toLocal();
+    DateTime justnow = today.subtract(Duration(minutes: 1));
     DateTime localDate = dateTime.toLocal();
-
-    //just now
-    if (!localDate.difference(justNow).isNegative) {
-      return 'justnow';
-    }
-//today
+    DateFormat('jm');
+    //just today
+//       if (!localDate.difference(justnow).isNegative) {
+//         return 'justnow';
+//       }
+// //today
 
     String roughString = DateFormat('jm').format(dateTime);
-    if (localDate.day == now.day &&
-        localDate.month == now.month &&
-        localDate.year == now.year) {
+    if (localDate.day == today.day &&
+        localDate.month == today.month &&
+        localDate.year == today.year) {
       print(roughString);
 
       return roughString;
+    } else {
+      return localDate.day.toString();
     }
 //yesterday
-    DateTime yesterday = now.subtract(Duration(days: 1));
+    // DateTime yesterday = today.subtract(Duration(days: 1));
 
-    if (localDate.day == yesterday.day &&
-        localDate.month == yesterday.month &&
-        localDate.year == yesterday.year) {
-      return 'Yesterday';
-    }
+    // if (localDate.day == yesterday.day &&
+    //     localDate.month == yesterday.month &&
+    //     localDate.year == yesterday.year) {
+    //   return 'Yesterday';
+    // }
 
     //weekday
-    if (now.difference(localDate).inDays > 4 &&
-        now.month == localDate.month &&
-        now.year == localDate.year) {
-      String weekDay = DateFormat('EEEE').format(localDate);
-      print('week : $weekDay');
-      return 'week ago';
-    }
+    // if (today.difference(localDate).inDays > 4 &&
+    //     today.month == localDate.month &&
+    //     today.year == localDate.year) {
+    //   String weekDay = DateFormat('EEEE').format(localDate);
+    //   print('week : $weekDay');
+    //   return 'week ago';
+    // }
 
-    if (now.difference(localDate).inDays > 30 &&
-        localDate.month == now.month &&
-        localDate.year == now.year) {
-      return 'month ago';
-    }
+    // if (today.difference(localDate).inDays > 30 &&
+    //     localDate.month == today.month &&
+    //     localDate.year == today.year) {
+    //   return 'month ago';
+    // }
 
-    if (now.difference(localDate).inDays > 32 && localDate.year == now.year) {
-      Duration weeks = now.difference(localDate);
-      var daysToWeek = (weeks.inDays ~/ 7);
-      return '$daysToWeek weeks ago';
-    }
+    // if (today.difference(localDate).inDays > 32 && localDate.year == today.year) {
+    //   Duration weeks = today.difference(localDate);
+    //   var daysToWeek = (weeks.inDays ~/ 7);
+    //   return '$daysToWeek weeks ago';
+    // }
   }
 }
 
 // class DateFormatModel {
 //   String dateFormatter(DateTime dateTime) {
-//     DateTime now = DateTime.now();
-//     DateTime justNow = now.subtract(Duration(minutes: 1));
+//     DateTime today = DateTime.today();
+//     DateTime justtoday = today.subtract(Duration(minutes: 1));
 //     DateTime localDate = dateTime.toLocal();
 
-//     //just now
-//     if (!localDate.difference(justNow).isNegative) {
-//       return 'justnow';
+//     //just today
+//     if (!localDate.difference(justtoday).isNegative) {
+//       return 'justtoday';
 //     }
 // //today
 
 // //     String roughString = DateFormat('jm').format(dateTime);
-// //     if (localDate.day == now.day &&
-// //         localDate.month == now.month &&
-// //         localDate.year == now.year) {
+// //     if (localDate.day == today.day &&
+// //         localDate.month == today.month &&
+// //         localDate.year == today.year) {
 // //       print(roughString);
 
 // //       return roughString;
 // //     }
 // //yesterday
-//     DateTime yesterday = now.subtract(Duration(days: 1));
+//     DateTime yesterday = today.subtract(Duration(days: 1));
 
 //     if (localDate.day == yesterday.day &&
 //         localDate.month == yesterday.month &&
@@ -82,22 +85,22 @@ class DateFormatModel {
 //     }
 
 //     //weekday
-// //     if (now.difference(localDate).inDays > 4 &&
-// //         now.month == localDate.month &&
-// //         now.year == localDate.year) {
+// //     if (today.difference(localDate).inDays > 4 &&
+// //         today.month == localDate.month &&
+// //         today.year == localDate.year) {
 // //       String weekDay = DateFormat('EEEE').format(localDate);
 // //       print('week : $weekDay');
 // //       return 'week ago';
 // //     }
 
-//     if (now.difference(localDate).inDays > 30 &&
-//         localDate.month == now.month &&
-//         localDate.year == now.year) {
+//     if (today.difference(localDate).inDays > 30 &&
+//         localDate.month == today.month &&
+//         localDate.year == today.year) {
 //       return 'month ago';
 //     }
 
-//     if (now.difference(localDate).inDays > 32 && localDate.year == now.year) {
-//       Duration weeks = now.difference(localDate);
+//     if (today.difference(localDate).inDays > 32 && localDate.year == today.year) {
+//       Duration weeks = today.difference(localDate);
 //       var daysToWeek = weeks.inDays ~/ 7;
 
 //       String weekCount = '$daysToWeek weeks ago';

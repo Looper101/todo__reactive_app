@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           ),
           onPressed: () {
             //just re-pull UI for testing purposes
-            Provider.of<TodoBloc>(context, listen: false).queryb();
+            Provider.of<TodoBloc>(context, listen: false).clearDb();
             // Provider.of<TodoBloc>(context, listen: false).getTodo();
           },
         ),

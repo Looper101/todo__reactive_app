@@ -1,5 +1,6 @@
 import 'package:sqflite/sql.dart';
 import 'package:todo_stream/database/database.dart';
+import 'package:todo_stream/model/date_format.dart';
 import 'package:todo_stream/model/todo.dart';
 
 class TodoDao {
@@ -56,7 +57,9 @@ class TodoDao {
         ? result.map((e) => Todo.fromDatabase(e)).toList()
         : [];
 
-    return todos;
+    //manipulate evry todos in the todosList above..
+    print(todos);
+    return manipulate(todos);
   }
 
   Future<int> updateTodo(Todo todo) async {
@@ -79,9 +82,43 @@ class TodoDao {
     }
   }
 
-  Future queryDb() async {
+  Future<List<Map<String, dynamic>>> queryDb() async {
     final db = await dbProvider.database;
     var result = await db.query('todoTABLE');
     print("QUERY : $result");
+    return result;
+  }
+
+  Future clearDb() async {
+    final db = await dbProvider.database;
+    await db.delete(
+      'todoTABLE',
+      where: '1',
+    );
+  }
+
+  List<Todo> manipulate(List<Todo> todox) {
+    List<Todo> manipulatedTodo = todox
+        .asMap()
+        .map((i, value) => MapEntry(
+            i,
+            Todo(
+                id: value.id,
+                //add the function here
+                addDate: fixIncomingDateFromDb(value.addDate),
+                description: value.description,
+                isDone: value.isDone)))
+        .values
+        .toList();
+
+    return manipulatedTodo;
+  }
+
+  fixIncomingDateFromDb(String date) {
+    DateTime dt = DateTime.parse(date);
+
+    String formatedDate = DateFormatModel.dateFormatter(dt);
+
+    return formatedDate;
   }
 }
