@@ -8,30 +8,28 @@ Widget getTodosWidget(BuildContext context) {
   return StreamBuilder<List<Todo>>(
     stream: Provider.of<TodoBloc>(context).todos,
     builder: (context, AsyncSnapshot<List<Todo>> snapshot) {
-      List<Todo> todoList = snapshot.data;
-
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Center(
           child: CircularProgressIndicator(),
         );
       }
       if (snapshot.hasData) {
-        return snapshot.data.length != 0
+        return snapshot.data.isNotEmpty
             ? ListView.builder(
-                itemCount: snapshot.data.length,
+                itemCount: 0 + snapshot.data.length,
                 itemBuilder: (context, index) {
                   Todo todo = snapshot.data[index];
 
                   return Dismissible(
                     background: Container(
                       padding: EdgeInsets.only(left: 10),
-                      color: Colors.red,
+                      color: Colors.grey,
                       alignment: Alignment.centerLeft,
                       child: Icon(Icons.delete, color: Colors.white),
                     ),
                     secondaryBackground: Container(
                       padding: EdgeInsets.only(right: 10),
-                      color: Colors.red,
+                      color: Colors.grey,
                       alignment: Alignment.centerRight,
                       child: Icon(Icons.delete, color: Colors.white),
                     ),
@@ -46,17 +44,27 @@ Widget getTodosWidget(BuildContext context) {
                       return null;
                     },
                     child: Card(
-                      margin:
-                          EdgeInsets.only(top: index == 0 ? 10 : 5, bottom: 5),
+                      color: Colors.grey.shade800,
+                      margin: EdgeInsets.only(
+                        top: index == 0 ? 15 : 9,
+                        bottom: 9,
+                        left: 3,
+                        right: 3,
+                      ),
                       elevation: 5,
+                      shadowColor: Colors.blueGrey,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: ListTile(
                         subtitle: Text(
-                            DateParser.fixIncomingDateFromDb(todo.addDate),
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold)),
+                          DateParser.fixIncomingDateFromDb(todo.addDate),
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
                         leading: GestureDetector(
                           onTap: () {
                             todo.isDone = !todo.isDone;
@@ -65,15 +73,13 @@ Widget getTodosWidget(BuildContext context) {
                                 .updateTodo(todo);
                           },
                           child: Container(
-                            child: todo.isDone
-                                ? Icon(Icons.done)
-                                : Icon(Icons.check_box_outline_blank),
+                            child: customWidget(isDone: todo.isDone),
                           ),
                         ),
                         trailing: IconButton(
                           icon: Icon(
                             Icons.cancel_outlined,
-                            color: Colors.red,
+                            color: Colors.green.withOpacity(0.8),
                           ),
                           onPressed: () =>
                               Provider.of<TodoBloc>(context, listen: false)
@@ -82,6 +88,10 @@ Widget getTodosWidget(BuildContext context) {
                         title: Text(
                           snapshot.data[index].description,
                           style: TextStyle(
+                              color: !todo.isDone
+                                  ? Colors.blueGrey.shade300
+                                  : Colors.green,
+                              fontSize: 20,
                               decoration: todo.isDone
                                   ? TextDecoration.lineThrough
                                   : null),
@@ -95,9 +105,9 @@ Widget getTodosWidget(BuildContext context) {
                 child: Text(
                   'Add todo',
                   style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                      color: Colors.green),
                 ),
               );
       } else {
@@ -117,5 +127,24 @@ Widget getTodosWidget(BuildContext context) {
         );
       }
     },
+  );
+}
+
+//TODO: ADD DATE STREAM IMPLEMEMATTION   Provider.of<TodoBloc>(context, listen: false).getTodo();
+
+Widget customWidget({bool isDone}) {
+  return AnimatedContainer(
+    curve: Curves.bounceInOut,
+    duration: Duration(seconds: 3),
+    height: 20,
+    width: 20,
+    decoration: BoxDecoration(
+      color: !isDone ? Colors.white : Colors.green,
+      shape: BoxShape.circle,
+      border: Border.all(
+        color: isDone ? Colors.green : Colors.blueGrey,
+        width: 5,
+      ),
+    ),
   );
 }

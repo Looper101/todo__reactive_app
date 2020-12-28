@@ -1,6 +1,5 @@
 import 'package:sqflite/sql.dart';
 import 'package:todo_stream/database/database.dart';
-import 'package:todo_stream/model/date_format.dart';
 import 'package:todo_stream/model/todo.dart';
 
 class TodoDao {
@@ -58,7 +57,6 @@ class TodoDao {
         : [];
 
     //manipulate evry todos in the todosList above..
-    print(todos);
     // return manipulate(todos);
 
     return todos;
@@ -98,5 +96,17 @@ class TodoDao {
       'todoTABLE',
       where: '1',
     );
+  }
+
+  Future<String> getDateOnly(Todo todo) async {
+    final db = await dbProvider.database;
+    List<Map<String, dynamic>> result;
+    result = await db.query('todoTABLE', where: "id=?", whereArgs: [todo.id]);
+
+    List<Todo> todos = result.isNotEmpty
+        ? result.map((e) => Todo.fromDatabase(e)).toList()
+        : [];
+
+    return todos[0].addDate;
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:todo_stream/model/date_format.dart';
 import 'package:todo_stream/model/todo.dart';
 import 'package:todo_stream/repository/todo_repository.dart';
 
@@ -11,8 +10,18 @@ class TodoBloc {
 
   Stream<List<Todo>> get todos => _todoController.stream;
 
+  //todo counter sink and stream
+  final _todoCounterController = StreamController<int>();
+  Stream<int> get todoCountStream => _todoCounterController.stream;
+  StreamSink<int> get _todoCountSink => _todoCounterController.sink;
+
+  //methods
   getTodo({String query}) async {
+    List<Todo> res;
+    int totalTodos;
     _todoController.sink.add(await _todoRepository.getAllTodo(query: query));
+    res = await _todoRepository.getAllTodo(query: query);
+    _todoCountSink.add(res.length);
   }
 
   addTodo(Todo todo) async {
@@ -39,8 +48,21 @@ class TodoBloc {
     await queryb();
   }
 
+  getDateOnly(Todo todo) async {
+    Stream.periodic(Duration(seconds: 1), (value) async {
+      var result = await _todoRepository.fetchDate(todo);
+      dateSink.add(result);
+    });
+  }
+
+  Stream<String> get dateStream => _nameController.stream;
+  StreamSink<String> get dateSink => _nameController.sink;
+  final _nameController = StreamController<String>();
+
   dispose() {
     _todoController.close();
+    _nameController.close();
+    _todoCounterController.close();
   }
 }
 
