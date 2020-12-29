@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
-    Provider.of<TodoBloc>(context, listen: false).getTodo();
+    Provider.of<TodoBloc>(context, listen: false).getTodoClone();
 
     super.didChangeDependencies();
   }

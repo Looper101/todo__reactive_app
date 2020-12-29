@@ -58,7 +58,8 @@ Widget getTodosWidget(BuildContext context) {
                       ),
                       child: ListTile(
                         subtitle: Text(
-                          DateParser.fixIncomingDateFromDb(todo.addDate),
+                          // DateParser.fixIncomingDateFromDb(todo.addDate)
+                          todo.addDate,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

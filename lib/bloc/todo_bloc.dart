@@ -18,13 +18,13 @@ class TodoBloc {
   StreamSink<int> get _todoCountSink => _todoCounterController.sink;
 
   //methods
-  getTodo({String query}) async {
-    List<Todo> res;
-    int totalTodos;
-    _todoController.sink.add(await _todoRepository.getAllTodo(query: query));
-    res = await _todoRepository.getAllTodo(query: query);
-    _todoCountSink.add(res.length);
-  }
+  // getTodo({String query}) async {
+  //   List<Todo> res;
+  //   int totalTodos;
+  //   _todoController.sink.add(await _todoRepository.getAllTodo(query: query));
+  //   res = await _todoRepository.getAllTodo(query: query);
+  //   _todoCountSink.add(res.length);
+  // }
 
 //TODO: Use this instead of the getTodo methods.........
   getTodoClone() async {
@@ -34,8 +34,16 @@ class TodoBloc {
     List<Todo> todos = result.isNotEmpty
         ? result
             .asMap()
-            .map((key, value) => MapEntry(key,
-                Todo(addDate: DateParser.fixIncomingDateFromDb(value.addDate))))
+            .map(
+              (key, value) => MapEntry(
+                key,
+                Todo(
+                    addDate: DateParser.fixIncomingDateFromDb(value.addDate),
+                    id: value.id,
+                    isDone: value.isDone,
+                    description: value.description),
+              ),
+            )
             .values
             .toList()
         : [];
@@ -45,17 +53,17 @@ class TodoBloc {
 
   addTodo(Todo todo) async {
     await _todoRepository.insertTodo(todo);
-    getTodo();
+    getTodoClone();
   }
 
   updateTodo(Todo todo) async {
     await _todoRepository.updateTodo(todo);
-    getTodo();
+    getTodoClone();
   }
 
   deleteTodo(int id) async {
     await _todoRepository.deleteTodo(id);
-    getTodo();
+    getTodoClone();
   }
 
   queryb() async {
@@ -64,7 +72,7 @@ class TodoBloc {
 
   clearDb() async {
     await _todoRepository.clearDb();
-    await queryb();
+    await getTodoClone();
   }
 
   getDateOnly(Todo todo) async {
