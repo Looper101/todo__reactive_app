@@ -23,13 +23,13 @@ Widget getTodosWidget(BuildContext context) {
                   return Dismissible(
                     background: Container(
                       padding: EdgeInsets.only(left: 10),
-                      color: Colors.grey,
+                      color: Colors.blueGrey.withOpacity(0.4),
                       alignment: Alignment.centerLeft,
                       child: Icon(Icons.delete, color: Colors.white),
                     ),
                     secondaryBackground: Container(
                       padding: EdgeInsets.only(right: 10),
-                      color: Colors.grey,
+                      color: Colors.blueGrey.withOpacity(0.4),
                       alignment: Alignment.centerRight,
                       child: Icon(Icons.delete, color: Colors.white),
                     ),
@@ -44,12 +44,12 @@ Widget getTodosWidget(BuildContext context) {
                       return null;
                     },
                     child: Card(
-                      color: Colors.grey.shade800,
+                      color: Colors.black,
                       margin: EdgeInsets.only(
                         top: index == 0 ? 15 : 9,
                         bottom: 9,
-                        left: 3,
-                        right: 3,
+                        left: 10,
+                        right: 10,
                       ),
                       elevation: 5,
                       shadowColor: Colors.blueGrey,
@@ -69,8 +69,8 @@ Widget getTodosWidget(BuildContext context) {
                           onTap: () {
                             todo.isDone = !todo.isDone;
 
-                            Provider.of<TodoBloc>(context, listen: false)
-                                .updateTodo(todo);
+                            // Provider.of<TodoBloc>(context, listen: false)
+                            //     .updateTodo(todo);
                           },
                           child: Container(
                             child: customWidget(isDone: todo.isDone),

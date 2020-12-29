@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:todo_stream/model/date_format.dart';
+import 'package:todo_stream/model/date_parser.dart';
 import 'package:todo_stream/model/todo.dart';
 import 'package:todo_stream/repository/todo_repository.dart';
 
@@ -22,6 +24,23 @@ class TodoBloc {
     _todoController.sink.add(await _todoRepository.getAllTodo(query: query));
     res = await _todoRepository.getAllTodo(query: query);
     _todoCountSink.add(res.length);
+  }
+
+//TODO: Use this instead of the getTodo methods.........
+  getTodoClone() async {
+    List<Todo> result;
+    result = await _todoRepository.getAllTodo();
+
+    List<Todo> todos = result.isNotEmpty
+        ? result
+            .asMap()
+            .map((key, value) => MapEntry(key,
+                Todo(addDate: DateParser.fixIncomingDateFromDb(value.addDate))))
+            .values
+            .toList()
+        : [];
+    _todoController.sink.add(todos);
+    _todoCountSink.add(todos.length);
   }
 
   addTodo(Todo todo) async {
