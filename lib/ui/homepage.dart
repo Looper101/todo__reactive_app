@@ -1,11 +1,15 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_stream/bloc/todo_bloc.dart';
+import 'package:todo_stream/deviceSizeConfig/device_size_config.dart';
+import 'package:todo_stream/pallete.dart';
+import 'package:todo_stream/widget/bg_clipper.dart';
+
 import 'components/get_todo_widget.dart';
 import 'components/show_addtodo_sheet.dart';
 
 class HomePage extends StatefulWidget {
+  static String id = 'homePage';
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -13,13 +17,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
-    Provider.of<TodoBloc>(context, listen: false).getTodoClone();
+    Provider.of<TodoBloc>(context, listen: false).getTodo();
 
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
+    DeviceSizeConfig().init(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
@@ -28,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 10),
         child: FloatingActionButton(
-          backgroundColor: Colors.green,
+          backgroundColor: Pallete.activeColor,
           elevation: 5.0,
           child: Icon(Icons.add, color: Colors.white),
           onPressed: () {
@@ -38,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.blueGrey.withOpacity(0.5),
+        backgroundColor: Pallete.activeColor,
         actions: [
           StreamBuilder<int>(
             initialData: 0,
@@ -97,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                 child: ClipPath(
                     clipper: MyCustomClipper(),
                     child: Container(
-                      color: Colors.blueGrey.withOpacity(0.5),
+                      color: Color(0XFF222231),
                     )),
               ),
               getTodosWidget(context),
@@ -106,30 +111,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-}
-
-class MyCustomClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path1 = Path();
-
-    path1
-      ..moveTo(0, 0)
-      ..lineTo(0, size.height * 0.4)
-      ..lineTo(size.width * 0.8, size.height * 0.7)
-      ..lineTo(size.width * 0.8, size.height)
-      // ..quadraticBezierTo(
-      //     size.width * 0.92, size.height * 0.85, size.width, size.height * 0.78)
-      ..lineTo(size.width, size.height)
-      ..lineTo(size.width, 0)
-      ..close();
-
-    return path1;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

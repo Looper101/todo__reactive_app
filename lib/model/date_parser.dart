@@ -27,7 +27,7 @@ class DateParser {
       return formatedDate;
     } on FormatException {
       print("error message: format exception");
-      return 'hello';
+      return 'format error';
     }
   }
 }

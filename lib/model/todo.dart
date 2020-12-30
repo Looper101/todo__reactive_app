@@ -1,6 +1,6 @@
 class Todo {
   final int id;
-  final String description;
+  String description;
   bool isDone = false;
   final String addDate;
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_stream/bloc/todo_bloc.dart';
-import 'package:todo_stream/model/date_parser.dart';
 import 'package:todo_stream/model/todo.dart';
+import 'package:todo_stream/pallete.dart';
+import 'package:todo_stream/ui/editpage/edit_page.dart';
 
 Widget getTodosWidget(BuildContext context) {
   return StreamBuilder<List<Todo>>(
@@ -43,59 +44,68 @@ Widget getTodosWidget(BuildContext context) {
                       }
                       return null;
                     },
-                    child: Card(
-                      color: Colors.black,
-                      margin: EdgeInsets.only(
-                        top: index == 0 ? 15 : 9,
-                        bottom: 9,
-                        left: 10,
-                        right: 10,
-                      ),
-                      elevation: 5,
-                      shadowColor: Colors.blueGrey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ListTile(
-                        subtitle: Text(
-                          // DateParser.fixIncomingDateFromDb(todo.addDate)
-                          todo.addDate,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueGrey,
-                          ),
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, EditPage.id,
+                          arguments: todo),
+                      child: Card(
+                        color: todo.isDone
+                            ? Pallete.activeColor
+                            : Pallete.inactiveColor,
+                        margin: EdgeInsets.only(
+                          top: index == 0 ? 15 : 9,
+                          bottom: 9,
+                          left: 10,
+                          right: 10,
                         ),
-                        leading: GestureDetector(
-                          onTap: () {
-                            todo.isDone = !todo.isDone;
+                        elevation: 7,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: ListTile(
+                          subtitle: Text(
+                            // DateParser.fixIncomingDateFromDb(todo.addDate)
+                            todo.addDate,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                          leading: GestureDetector(
+                            onTap: () {
+                              todo.isDone = !todo.isDone;
 
-                            // Provider.of<TodoBloc>(context, listen: false)
-                            //     .updateTodo(todo);
-                          },
-                          child: Container(
-                            child: customWidget(isDone: todo.isDone),
-                          ),
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            Icons.cancel_outlined,
-                            color: Colors.green.withOpacity(0.8),
-                          ),
-                          onPressed: () =>
                               Provider.of<TodoBloc>(context, listen: false)
-                                  .deleteTodo(todo.id),
-                        ),
-                        title: Text(
-                          snapshot.data[index].description,
-                          style: TextStyle(
-                              color: !todo.isDone
-                                  ? Colors.blueGrey.shade300
-                                  : Colors.green,
-                              fontSize: 20,
-                              decoration: todo.isDone
-                                  ? TextDecoration.lineThrough
-                                  : null),
+                                  .updateTodo(todo);
+                            },
+                            child: Container(
+                              child: customWidget(isDone: todo.isDone),
+                            ),
+                          ),
+                          trailing: IconButton(
+                            tooltip: 'Delete',
+                            icon: Icon(
+                              Icons.cancel_outlined,
+                              color: todo.isDone
+                                  ? Color(0xFF242433)
+                                  : Color(0xFF38BA6C),
+                            ),
+                            onPressed: () =>
+                                Provider.of<TodoBloc>(context, listen: false)
+                                    .deleteTodo(todo.id),
+                          ),
+                          title: Text(
+                            snapshot.data[index].description,
+                            style: TextStyle(
+                                color: todo.isDone
+                                    ? Colors.white
+                                    : Color(0xFF38BA6C),
+                                fontSize: 20,
+                                decoration: todo.isDone
+                                    ? TextDecoration.lineThrough
+                                    : null),
+                          ),
                         ),
                       ),
                     ),
@@ -135,15 +145,15 @@ Widget getTodosWidget(BuildContext context) {
 
 Widget customWidget({bool isDone}) {
   return AnimatedContainer(
-    curve: Curves.bounceInOut,
-    duration: Duration(seconds: 3),
+    curve: Curves.elasticInOut,
+    duration: Duration(milliseconds: 250),
     height: 20,
     width: 20,
     decoration: BoxDecoration(
-      color: !isDone ? Colors.white : Colors.green,
+      color: !isDone ? Colors.white : Color(0xFF38BA6C),
       shape: BoxShape.circle,
       border: Border.all(
-        color: isDone ? Colors.green : Colors.blueGrey,
+        color: isDone ? Colors.green : Color(0xFF788597),
         width: 5,
       ),
     ),
