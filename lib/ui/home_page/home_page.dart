@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.blueGrey.withOpacity(0.4),
+      backgroundColor: Pallete.extraInactiveColor,
       floatingActionButton: Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 10),
@@ -43,19 +43,20 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Pallete.activeColor,
+        backgroundColor: Pallete.inactiveColor,
         actions: [
           StreamBuilder<int>(
             initialData: 0,
             stream: Provider.of<TodoBloc>(context).todoCountStream,
             builder: (context, snapshot) {
               return Container(
-                margin: EdgeInsets.only(right: 10),
-                width: 50,
-                padding: EdgeInsets.all(8),
+                margin:
+                    EdgeInsets.only(right: DeviceSizeConfig.screenWidth * 0),
+                width: DeviceSizeConfig.screenHeight * 0.08,
+                padding: EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.circle,
+                  color: Pallete.extraInactiveColor,
+                  shape: BoxShape.rectangle,
 
                   // borderRadius: BorderRadius.only(
                   //   topLeft: Radius.circular(5),
@@ -66,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.center,
                 child: Text(
                   snapshot.data.toString(),
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, fontFamily: 'opensans'),
                 ),
               );
             },
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
-              fontFamily: 'RobotoMono',
+              fontFamily: 'opensans',
               fontStyle: FontStyle.normal,
               fontSize: 19),
         ),

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_stream/bloc/todo_bloc.dart';
 import 'package:todo_stream/model/todo.dart';
 import 'package:todo_stream/pallete.dart';
-import 'package:todo_stream/ui/editpage/edit_page.dart';
+import 'package:todo_stream/ui/edit_page/edit_page.dart';
 
 Widget getTodosWidget(BuildContext context) {
   return StreamBuilder<List<Todo>>(
@@ -68,6 +68,7 @@ Widget getTodosWidget(BuildContext context) {
                             todo.addDate,
                             style: TextStyle(
                               fontSize: 15,
+                              fontFamily: 'opensans',
                               fontWeight: FontWeight.bold,
                               color: Colors.blueGrey,
                             ),
@@ -98,13 +99,15 @@ Widget getTodosWidget(BuildContext context) {
                           title: Text(
                             snapshot.data[index].description,
                             style: TextStyle(
-                                color: todo.isDone
-                                    ? Colors.white
-                                    : Color(0xFF38BA6C),
-                                fontSize: 20,
-                                decoration: todo.isDone
-                                    ? TextDecoration.lineThrough
-                                    : null),
+                              color: todo.isDone
+                                  ? Colors.white
+                                  : Color(0xFF38BA6C),
+                              fontSize: 20,
+                              decoration: todo.isDone
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                              fontFamily: 'opensans',
+                            ),
                           ),
                         ),
                       ),

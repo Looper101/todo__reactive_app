@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_stream/bloc/input_auth_bloc.dart';
-import 'package:todo_stream/ui/homepage.dart';
+import 'package:todo_stream/ui/edit_page/edit_page.dart';
+import 'package:todo_stream/ui/home_page/home_page.dart';
 
+import 'bloc/input_auth_bloc.dart';
 import 'bloc/todo_bloc.dart';
-import 'ui/editpage/edit_page.dart';
 
 void main() {
   runApp(MyApp());
