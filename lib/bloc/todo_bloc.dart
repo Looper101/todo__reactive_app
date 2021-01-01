@@ -8,24 +8,25 @@ import 'package:todo_stream/repository/todo_repository.dart';
 class TodoBloc {
   final _todoRepository = TodoRepository();
 
+  //controllers
   final _todoController = BehaviorSubject<List<Todo>>();
+  final _todoCounterController = BehaviorSubject<int>();
 
+//get
+  Stream<int> get todoCountStream => _todoCounterController.stream;
   Stream<List<Todo>> get todos => _todoController.stream;
 
-  //todo counter sink and stream
-  final _todoCounterController = BehaviorSubject<int>();
-  Stream<int> get todoCountStream => _todoCounterController.stream;
+  //set
   StreamSink<int> get _todoCountSink => _todoCounterController.sink;
 
   //methods
-  getTodo({String query}) async {
+  Future<void> getTodo({String query}) async {
     List<Todo> res;
     _todoController.sink.add(await getTodoClone());
     res = await getTodoClone();
     _todoCountSink.add(res.length);
   }
 
-//TODO: Use this instead of the getTodo methods.........
   Future<List<Todo>> getTodoClone() async {
     List<Todo> result;
     result = await _todoRepository.getAllTodo();
@@ -37,10 +38,11 @@ class TodoBloc {
               (key, value) => MapEntry(
                 key,
                 Todo(
-                    addDate: DateParser.fixIncomingDateFromDb(value.addDate),
-                    id: value.id,
-                    isDone: value.isDone,
-                    description: value.description),
+                  addDate: value.addDate,
+                  id: value.id,
+                  isDone: value.isDone,
+                  description: value.description,
+                ),
               ),
             )
             .values
@@ -48,8 +50,18 @@ class TodoBloc {
         : [];
 
     return todos;
-    // _todoController.sink.add(todos);
-    // _todoCountSink.add(todos.length);
+  }
+
+//Crud operations
+
+  Future<Stream<Duration>> dateEmmitter(DateTime dateTime) async {
+    return Stream<Duration>.periodic(
+      Duration(seconds: 1),
+      (x) {
+        Duration remDate = DateTime.now().difference(dateTime);
+        return remDate;
+      },
+    );
   }
 
   addTodo(Todo todo) async {
@@ -76,23 +88,9 @@ class TodoBloc {
     await getTodo();
   }
 
-  // getDateOnly(Todo todo) async {
-  //   Stream.periodic(Duration(seconds: 1), (value) async {
-  //     var result = await _todoRepository.fetchDate(todo);
-  //     // dateSink.add(result);
-  //   });
-  // }
-  //
-  // Stream<String> get dateStream => _nameController.stream;
-  // StreamSink<String> get dateSink => _nameController.sink;
-  // final _nameController = StreamController<String>();
-
   dispose() {
     _todoController.close();
     // _nameController.close();
     _todoCounterController.close();
   }
 }
-
-//TODO: add a method(Stream) that run a function every two seconds
-// The function will fetch date difference every now and then

@@ -6,7 +6,7 @@ class DateFormatModel {
     DateTime today = DateTime.now().toLocal();
     DateTime justnow = today.subtract(Duration(minutes: 1));
     DateTime localDate = dateTime.toLocal();
-    DateFormat('jm');
+    // DateFormat('jm');
 
     //just today
     if (!localDate.difference(justnow).isNegative) {
@@ -58,6 +58,7 @@ class DateFormatModel {
       var daysToWeek = (weeks.inDays ~/ 7);
       return '$daysToWeek weeks ago';
     }
+    return dateTime.toString();
   }
 }
 

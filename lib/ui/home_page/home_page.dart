@@ -5,7 +5,7 @@ import 'package:todo_stream/deviceSizeConfig/device_size_config.dart';
 import 'package:todo_stream/pallete.dart';
 import 'package:todo_stream/widget/bg_clipper.dart';
 
-import 'components/get_todo_widget.dart';
+import 'components/task_list.dart';
 import 'components/show_addtodo_sheet.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +20,12 @@ class _HomePageState extends State<HomePage> {
     Provider.of<TodoBloc>(context, listen: false).getTodo();
 
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    Provider.of<TodoBloc>(context, listen: false).dispose();
+    super.dispose();
   }
 
   @override
@@ -43,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Pallete.inactiveColor,
+        backgroundColor: Pallete.appbarColor,
         actions: [
           StreamBuilder<int>(
             initialData: 0,
@@ -57,17 +63,15 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   color: Pallete.extraInactiveColor,
                   shape: BoxShape.rectangle,
-
-                  // borderRadius: BorderRadius.only(
-                  //   topLeft: Radius.circular(5),
-                  //   bottomLeft: Radius.circular(0),
-                  // ),
                 ),
                 // margin: EdgeInsets.only(top: 10),
                 alignment: Alignment.center,
                 child: Text(
                   snapshot.data.toString(),
-                  style: TextStyle(fontSize: 20, fontFamily: 'opensans'),
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'opensans',
+                      color: Pallete.activeColor),
                 ),
               );
             },
@@ -80,13 +84,11 @@ class _HomePageState extends State<HomePage> {
             size: 28,
           ),
           onPressed: () {
-            //just re-pull UI for testing purposes
-            // Provider.of<TodoBloc>(context, listen: false).clearDb();
-            // Provider.of<TodoBloc>(context, listen: false).getTodo();
+            //TODO: open drawer
           },
         ),
         title: Text(
-          "Arranger",
+          "Tasks",
           style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -101,12 +103,13 @@ class _HomePageState extends State<HomePage> {
             children: [
               Positioned(
                 child: ClipPath(
-                    clipper: MyCustomClipper(),
-                    child: Container(
-                      color: Color(0XFF222231),
-                    )),
+                  clipper: MyCustomClipper(),
+                  child: Container(
+                    color: Pallete.backgroundColor,
+                  ),
+                ),
               ),
-              getTodosWidget(context),
+              taskList(context),
             ],
           ),
         ),

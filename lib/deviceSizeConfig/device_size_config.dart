@@ -5,6 +5,7 @@ class DeviceSizeConfig {
   static double screenWidth;
   static double viewBottomInsets;
   static double longestSide;
+  static MediaQueryData mq;
   MediaQueryData _mediaQuery;
 
   init(BuildContext context) {
@@ -13,5 +14,6 @@ class DeviceSizeConfig {
     screenWidth = _mediaQuery.size.width;
     viewBottomInsets = _mediaQuery.viewInsets.bottom;
     longestSide = _mediaQuery.size.longestSide;
+    mq = MediaQuery.of(context);
   }
 }

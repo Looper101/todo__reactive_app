@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_stream/bloc/todo_bloc.dart';
+import 'package:todo_stream/deviceSizeConfig/device_size_config.dart';
+import 'package:todo_stream/model/date_parser.dart';
 import 'package:todo_stream/model/todo.dart';
 import 'package:todo_stream/pallete.dart';
 import 'package:todo_stream/ui/edit_page/edit_page.dart';
 
-Widget getTodosWidget(BuildContext context) {
+Widget taskList(BuildContext context) {
   return StreamBuilder<List<Todo>>(
     stream: Provider.of<TodoBloc>(context).todos,
     builder: (context, AsyncSnapshot<List<Todo>> snapshot) {
@@ -63,16 +65,24 @@ Widget getTodosWidget(BuildContext context) {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: ListTile(
-                          subtitle: Text(
-                            // DateParser.fixIncomingDateFromDb(todo.addDate)
-                            todo.addDate,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'opensans',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey,
-                            ),
-                          ),
+                          subtitle: StreamBuilder<Object>(
+                              stream: DateParser.dateStream(todo.addDate),
+                              initialData: '0',
+                              builder: (context, snapshot) {
+                                return Text(
+                                  // DateParser.fixIncomingDateFromDb(todo.addDate)
+                                  snapshot.data.toString(),
+                                  style: TextStyle(
+                                    fontSize:
+                                        DeviceSizeConfig.longestSide * 0.02,
+                                    fontFamily: 'opensans',
+                                    fontWeight: FontWeight.w600,
+                                    color: todo.isDone
+                                        ? Colors.white70
+                                        : Colors.blueGrey,
+                                  ),
+                                );
+                              }),
                           leading: GestureDetector(
                             onTap: () {
                               todo.isDone = !todo.isDone;
@@ -98,11 +108,12 @@ Widget getTodosWidget(BuildContext context) {
                           ),
                           title: Text(
                             snapshot.data[index].description,
+                            textAlign: TextAlign.left,
                             style: TextStyle(
+                              fontSize: DeviceSizeConfig.longestSide * 0.03,
                               color: todo.isDone
                                   ? Colors.white
                                   : Color(0xFF38BA6C),
-                              fontSize: 20,
                               decoration: todo.isDone
                                   ? TextDecoration.lineThrough
                                   : null,
@@ -121,20 +132,22 @@ Widget getTodosWidget(BuildContext context) {
                   style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
-                      color: Colors.green),
+                      color: Pallete.activeColor),
                 ),
               );
       } else {
         return Center(
           child: Column(
             children: [
-              CircularProgressIndicator(),
+              CircularProgressIndicator(
+                backgroundColor: Pallete.activeColor,
+              ),
               Text(
                 'Loading todo',
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                    color: Pallete.activeColor),
               ),
             ],
           ),
