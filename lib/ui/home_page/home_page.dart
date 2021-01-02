@@ -32,8 +32,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     DeviceSizeConfig().init(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomInset: true,
+      // resizeToAvoidBottomPadding: true,
       backgroundColor: Pallete.extraInactiveColor,
       floatingActionButton: Padding(
         padding:

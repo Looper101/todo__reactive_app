@@ -57,13 +57,13 @@ class _EditPageState extends State<EditPage> {
                   clipper: MyCustomClipper(),
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
+                      horizontal: DeviceSizeConfig.screenHeight * 0.03,
+                      vertical: DeviceSizeConfig.screenWidth * 0.02,
                     ),
                     color: Color(0XFF222231),
                     child: StreamBuilder<String>(
                         stream: Provider.of<InputAuthBloc>(context).inputStream,
-                        builder: (context, AsyncSnapshot snapshot) {
+                        builder: (context, AsyncSnapshot<String> snapshot) {
                           return Column(
                             children: [
                               TextField(
@@ -93,13 +93,14 @@ class _EditPageState extends State<EditPage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(
+                                      DeviceSizeConfig.longestSide * 0.01),
                                   child: Text(
                                     'Update',
                                     style: TextStyle(
                                         fontFamily: 'opensans',
                                         fontSize: DeviceSizeConfig.longestSide *
-                                            0.02),
+                                            0.03),
                                   ),
                                 ),
                                 onPressed: !snapshot.hasError
