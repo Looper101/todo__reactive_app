@@ -28,6 +28,8 @@ class _EditPageState extends State<EditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Color(0XEB222231),
       appBar: AppBar(
         backgroundColor: Pallete.activeColor,
@@ -81,9 +83,10 @@ class _EditPageState extends State<EditPage> {
                                 maxLength: 50,
                                 maxLengthEnforced: true,
                                 decoration: InputDecoration(
-                                    errorText: snapshot.hasError
-                                        ? snapshot.error.toString()
-                                        : null),
+                                  errorText: snapshot.hasError
+                                      ? snapshot.error.toString()
+                                      : null,
+                                ),
                               ),
                               FlatButton(
                                 color: Pallete.activeColor,

@@ -39,6 +39,7 @@ Widget taskList(BuildContext context) {
                     key: ObjectKey(todo),
                     direction: DismissDirection.horizontal,
                     onDismissed: (direction) {
+                      //either of the direction will trigger this
                       if (direction == DismissDirection.startToEnd ||
                           direction == DismissDirection.endToStart) {
                         Provider.of<TodoBloc>(context, listen: false)

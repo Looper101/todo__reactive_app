@@ -1,6 +1,5 @@
 {
     "editor.fontFamily": "Comic sans MS",
-    "editor.fontSize": 15,
     "editor.fontLigatures": true,
     "editor.fontWeight": "normal",
 "indentRainbow.colors": [
@@ -8,6 +7,8 @@
     "rgba(127,255,127,0.07)",
     "rgba(255,127,255,0.07)",
     "rgba(79,236,236,0.07)"
-]
+],
+"editor.wordWrap": "on",
+"editor.fontSize": 16
     
 }
