@@ -158,8 +158,6 @@ Widget taskList(BuildContext context) {
   );
 }
 
-//TODO: ADD DATE STREAM IMPLEMEMATTION   Provider.of<TodoBloc>(context, listen: false).getTodo();
-
 Widget customWidget({bool isDone}) {
   return AnimatedContainer(
     curve: Curves.elasticInOut,

@@ -74,7 +74,6 @@ class DateParser {
 
   static amPmDetector(int hour) {
     if (hour >= 12) {
-      print(DateTime.now());
       return 'PM';
     } else {
       return 'AM';

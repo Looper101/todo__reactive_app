@@ -10,103 +10,117 @@ showAddTodoSheet(BuildContext context) {
   final _descriptionController = TextEditingController();
   showModalBottomSheet(
     // enableDrag: true,
-    // isScrollControlled: true,
     // isDismissible: true,
-    backgroundColor: Colors.transparent,
+    isScrollControlled: true,
     context: context,
     builder: (context) {
-      return Container(
-        margin: EdgeInsets.only(
-          left: 10,
-          right: 10,
-        ),
-        // height: DeviceSizeConfig.screenHeight * 0.5,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Pallete.activeColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(left: 15, top: 25.0, right: 15, bottom: 20),
-          child: ListView(
-            children: [
-              StreamBuilder<String>(
-                stream: Provider.of<InputAuthBloc>(context).inputStream,
-                builder: (context, snapshot) {
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          cursorColor: Colors.black,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'opensans',
-                            fontSize: DeviceSizeConfig.longestSide * 0.025,
-                          ),
-                          textInputAction: TextInputAction.newline,
-                          controller: _descriptionController,
-                          autofocus: true,
-                          maxLines: 5,
-                          maxLengthEnforced: true,
-                          decoration: InputDecoration(
-                            // hintText: 'I have to',
-                            labelText: 'I have to',
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            errorText: snapshot.hasError
-                                ? snapshot.error.toString()
-                                : null,
-                            errorStyle: TextStyle(
-                              color: Colors.red,
-                              fontSize: DeviceSizeConfig.longestSide * 0.02,
-                            ),
-                          ),
-                          maxLength: 50,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5, top: 15),
-                        child: CircleAvatar(
-                          backgroundColor: Pallete.extraInactiveColor,
-                          radius: DeviceSizeConfig.longestSide * 0.03,
-                          child: Center(
-                            child: IconButton(
-                              color: Pallete.activeColor,
-                              icon: Icon(
-                                Icons.save,
-                                size: 22,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                if (_descriptionController.text.length > 0) {
-                                  final newTodo = Todo(
-                                    description: _descriptionController.text,
-                                    addDate: DateTime.now().toString(),
-                                  );
+      return SingleChildScrollView(
+        child: Container(
+          color: Color(0xFF000010),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            // margin: EdgeInsets.only(
+            //   left: 10,
+            //   right: 10,
+            // ),
+            // height: DeviceSizeConfig.screenHeight * 0.5,
 
-                                  Provider.of<TodoBloc>(context, listen: false)
-                                      .addTodo(newTodo);
-                                  _descriptionController.clear();
-                                  Navigator.pop(context);
-                                } else {
-                                  Navigator.pop(context);
-                                }
-                              },
+            decoration: BoxDecoration(
+              color: Pallete.activeColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 15,
+                top: 25.0,
+                right: 15,
+                bottom: 30,
+              ),
+              child: Column(
+                children: [
+                  StreamBuilder<String>(
+                    stream: Provider.of<InputAuthBloc>(context).inputStream,
+                    builder: (context, snapshot) {
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              cursorColor: Colors.black,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'opensans',
+                                fontSize: DeviceSizeConfig.longestSide * 0.025,
+                              ),
+                              textInputAction: TextInputAction.newline,
+                              controller: _descriptionController,
+                              autofocus: true,
+                              maxLines: 5,
+                              maxLengthEnforced: true,
+                              decoration: InputDecoration(
+                                // hintText: 'I have to',
+                                labelText: 'I have to',
+                                labelStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                errorText: snapshot.hasError
+                                    ? snapshot.error.toString()
+                                    : null,
+                                errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: DeviceSizeConfig.longestSide * 0.02,
+                                ),
+                              ),
+                              maxLength: 50,
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  );
-                },
+                          Padding(
+                            padding: EdgeInsets.only(left: 5, top: 15),
+                            child: CircleAvatar(
+                              backgroundColor: Pallete.extraInactiveColor,
+                              radius: DeviceSizeConfig.longestSide * 0.03,
+                              child: Center(
+                                child: IconButton(
+                                  color: Pallete.activeColor,
+                                  icon: Icon(
+                                    Icons.save,
+                                    size: 22,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    if (_descriptionController.text.length >
+                                        0) {
+                                      final newTodo = Todo(
+                                        description:
+                                            _descriptionController.text,
+                                        addDate: DateTime.now().toString(),
+                                      );
+
+                                      Provider.of<TodoBloc>(context,
+                                              listen: false)
+                                          .addTodo(newTodo);
+                                      _descriptionController.clear();
+                                      Navigator.pop(context);
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       );

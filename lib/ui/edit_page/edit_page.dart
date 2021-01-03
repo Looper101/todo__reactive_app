@@ -29,7 +29,7 @@ class _EditPageState extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: true,
       backgroundColor: Color(0XEB222231),
       appBar: AppBar(
         backgroundColor: Pallete.activeColor,
