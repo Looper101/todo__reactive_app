@@ -86,4 +86,41 @@ class DateParser {
       return stringifyedDigit;
     }
   }
+//TODO:  Create another method to convert String to DateTime
+
+  //TODO: create a method that will take Date as an argument then return DateTime
+
+  //or
+
+  //TODO: create a method that will Take [the added DateTime ]and check its diff/subtrac t[from DateTime.now] (proly  getting a duration ) ,then if the duration is more than seven days then return TRUE if not return FALSE
+
+  static bool dateDifference(DateTime x1) {
+    DateTime today = DateTime.now().toLocal();
+
+    Duration dateDiff = today.difference(x1);
+
+    if (dateDiff.inDays < 7) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //TODO: String to DateTime
+
+  static DateTime stringToDateTime(String value) {
+    DateTime parsedStringToDate = DateTime.parse(value);
+
+    return parsedStringToDate;
+  }
+
+//String to duration
+
+  static Duration stringToDateDiff(String value) {
+    DateTime now = DateTime.now();
+    DateTime parsedString = DateTime.parse(value);
+
+    final dateDiff = now.difference(parsedString);
+    return dateDiff;
+  }
 }

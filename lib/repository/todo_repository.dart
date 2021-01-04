@@ -19,4 +19,7 @@ class TodoRepository {
   Future clearDb() async => await todoDao.clearDbMain();
 
   Future<String> fetchDate(Todo todo) async => await todoDao.getDateOnly(todo);
+
+  Future<List<Todo>> getCompletedTasks() async =>
+      await todoDao.getCompletedTask();
 }

@@ -115,4 +115,17 @@ class TodoDao {
     final db = await dbProvider.database;
     await db.delete('todoTABLE');
   }
+
+  Future<List<Todo>> getCompletedTask() async {
+    final db = await dbProvider.database;
+
+    List<Map<String, dynamic>> result =
+        await db.query('todoTABLE', where: "is_done=?", whereArgs: [1]);
+
+    List<Todo> finalCompletedTask = result.isNotEmpty
+        ? result.map((e) => Todo.fromDatabase(e)).toList()
+        : [];
+
+    return finalCompletedTask;
+  }
 }

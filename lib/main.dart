@@ -6,6 +6,7 @@ import 'package:todo_stream/ui/task_info/task_info.dart';
 
 import 'bloc/input_auth_bloc.dart';
 import 'bloc/todo_bloc.dart';
+import 'bloc/todo_counter_bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider(create: (context) => TodoBloc()),
         Provider(create: (context) => InputAuthBloc()),
+        Provider(create: (context) => TaskCounterBloc())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

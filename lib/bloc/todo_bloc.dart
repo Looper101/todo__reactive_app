@@ -87,6 +87,8 @@ class TodoBloc {
     await getTodo();
   }
 
+//completed task.........❤❤
+
   dispose() {
     _todoController.close();
     // _nameController.close();
