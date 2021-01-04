@@ -64,8 +64,6 @@ class DateParser {
     );
   }
 
-//TODO: fix these repetition of code --aalready implemeneted in dateStream() method
-
   static int timeSinceCreated(Duration duration) {
     DateTime currentDate = DateTime.now().toLocal();
     var dateDiff = currentDate.day - (duration.inDays);

@@ -110,6 +110,7 @@ class TodoDao {
     return todos[0].addDate;
   }
 
+  // ignore: missing_return
   Future<int> clearDbMain() async {
     final db = await dbProvider.database;
     await db.delete('todoTABLE');

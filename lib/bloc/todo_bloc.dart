@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:todo_stream/model/date_parser.dart';
 import 'package:todo_stream/model/todo.dart';
 import 'package:todo_stream/repository/todo_repository.dart';
 

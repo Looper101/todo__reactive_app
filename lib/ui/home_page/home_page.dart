@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_stream/bloc/todo_bloc.dart';
 import 'package:todo_stream/deviceSizeConfig/device_size_config.dart';
@@ -97,9 +98,25 @@ class _HomePageState extends State<HomePage> {
                 ),
                 buildDrawerButton(
                   title: 'Exit app',
-                  onPress: () {
-                    //TODO:  exit the app
-                  },
+                  onPress: () => showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: Text('Exit App'),
+                        actions: [
+                          CupertinoButton(
+                            child: Text('Yes'),
+                            onPressed: () => SystemChannels.platform
+                                .invokeMethod('SystemNavigator.pop'),
+                          ),
+                          CupertinoButton(
+                            child: Text('No'),
+                            onPressed: () => Navigator.pop(context),
+                          )
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
