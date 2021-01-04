@@ -30,13 +30,39 @@ class CustomDelegate extends SearchDelegate<Todo> {
   Widget buildResults(BuildContext context) {
     return StreamBuilder<List<Todo>>(
       stream: Provider.of<TodoBloc>(context, listen: true).todos,
-      builder: (context, snapshot) {
+      builder: (context, AsyncSnapshot<List<Todo>> snapshot) {
         if (!snapshot.hasData) {
-          return Text('seaerch something else');
+          return Center(
+            child: Text(
+              'No data',
+              style: TextStyle(color: Colors.red),
+            ),
+          );
         }
 
-        return ListTile(
-          leading: Text('leading'),
+        final results = snapshot.data.where((element) =>
+            element.description.toLowerCase().contains(query.toLowerCase()));
+
+        return ListView(
+          children: results
+              .map<Widget>(
+                (e) => Card(
+                  color: Pallete.inactiveColor,
+                  child: ListTile(
+                    title: Text(
+                      e.description,
+                    ),
+                    subtitle: Text(e.addDate),
+                    onTap: () {
+//TODO: dont know what to add anymore
+//TODO: Navigate to edit page to edit the result
+
+                      Navigator.pushNamed(context, EditPage.id, arguments: e);
+                    },
+                  ),
+                ),
+              )
+              .toList(),
         );
       },
     );
@@ -58,21 +84,26 @@ class CustomDelegate extends SearchDelegate<Todo> {
           );
         }
 
-        final results = snapshot.data.where(
-            (element) => element.description.toLowerCase().contains(query));
+        final results = snapshot.data.where((element) =>
+            element.description.toLowerCase().contains(query.toLowerCase()));
 
         return ListView(
           children: results
               .map<Widget>(
-                (e) => GestureDetector(
-                  onTap: () =>
-                      Navigator.pushNamed(context, EditPage.id, arguments: e),
-                  child: Card(
-                    color: Pallete.inactiveColor,
-                    child: ListTile(
-                      title: Text(e.description),
-                      subtitle: Text(e.addDate),
+                (e) => Card(
+                  color: Pallete.inactiveColor,
+                  child: ListTile(
+                    title: Text(
+                      e.description,
+                      style: TextStyle(
+                        color: Colors.blue.withOpacity(0.5),
+                      ),
                     ),
+                    subtitle: Text(e.addDate),
+                    onTap: () {
+                      query = e.description;
+                      Navigator.pushNamed(context, EditPage.id, arguments: e);
+                    },
                   ),
                 ),
               )
