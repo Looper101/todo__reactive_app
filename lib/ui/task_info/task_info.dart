@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_stream/bloc/todo_bloc.dart';
 import 'package:todo_stream/deviceSizeConfig/device_size_config.dart';
 import 'package:todo_stream/pallete.dart';
 
@@ -60,10 +62,17 @@ class TaskInfo extends StatelessWidget {
             ),
             Row(
               children: [
-                Expanded(
-                  child: buildReusableCard(
-                      mq: DeviceSizeConfig.mq, title: 'All', counter: 5),
-                ),
+                StreamBuilder<int>(
+                    stream: Provider.of<TodoBloc>(context).todoCountStream,
+                    initialData: 0,
+                    builder: (context, snapshot) {
+                      return Expanded(
+                        child: buildReusableCard(
+                            mq: DeviceSizeConfig.mq,
+                            title: 'All Active',
+                            counter: snapshot.data),
+                      );
+                    }),
                 Expanded(
                   child: buildReusableCard(
                       mq: DeviceSizeConfig.mq, counter: 10, title: 'Completed'),
