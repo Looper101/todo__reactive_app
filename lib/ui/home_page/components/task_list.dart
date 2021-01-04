@@ -66,9 +66,9 @@ Widget taskList(BuildContext context) {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: ListTile(
-                          subtitle: StreamBuilder<Object>(
+                          subtitle: StreamBuilder<String>(
                               stream: DateParser.dateStream(todo.addDate),
-                              initialData: '0',
+                              initialData: '',
                               builder: (context, snapshot) {
                                 return Text(
                                   // DateParser.fixIncomingDateFromDb(todo.addDate)
@@ -111,7 +111,7 @@ Widget taskList(BuildContext context) {
                             snapshot.data[index].description,
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                              fontSize: DeviceSizeConfig.longestSide * 0.03,
+                              fontSize: DeviceSizeConfig.longestSide * 0.025,
                               color: todo.isDone
                                   ? Colors.white
                                   : Color(0xFF38BA6C),

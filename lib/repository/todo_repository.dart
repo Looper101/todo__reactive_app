@@ -7,6 +7,7 @@ class TodoRepository {
   Future<List<Todo>> getAllTodo({String query}) async =>
       await todoDao.getTodos(query: query);
 
+  // ignore: missing_return
   Future<int> insertTodo(Todo todo) async {
     await todoDao.createTodo(todo);
   }
@@ -15,7 +16,7 @@ class TodoRepository {
   Future<int> deleteTodo(int id) async => await todoDao.deleteTodo(id);
   // Future<int> deleteAllTodo() async => await todoDao.deleteAllTodo();
   Future queryDb() async => await todoDao.queryDb();
-  Future clearDb() async => await todoDao.clearDb();
+  Future clearDb() async => await todoDao.clearDbMain();
 
   Future<String> fetchDate(Todo todo) async => await todoDao.getDateOnly(todo);
 }

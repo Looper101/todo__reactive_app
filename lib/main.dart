@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_stream/ui/edit_page/edit_page.dart';
 import 'package:todo_stream/ui/home_page/home_page.dart';
+import 'package:todo_stream/ui/task_info/task_info.dart';
 
 import 'bloc/input_auth_bloc.dart';
 import 'bloc/todo_bloc.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         routes: {
           HomePage.id: (context) => HomePage(),
           EditPage.id: (context) => EditPage(),
+          TaskInfo.id: (context) => TaskInfo()
         },
       ),
     );

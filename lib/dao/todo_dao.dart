@@ -109,4 +109,9 @@ class TodoDao {
 
     return todos[0].addDate;
   }
+
+  Future<int> clearDbMain() async {
+    final db = await dbProvider.database;
+    await db.delete('todoTABLE');
+  }
 }
