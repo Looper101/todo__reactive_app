@@ -103,13 +103,29 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) {
                       return CupertinoAlertDialog(
                         title: Text('Exit App'),
+                        content: Text(
+                          'This action will close the app',
+                          style: TextStyle(
+                              fontSize: DeviceSizeConfig.longestSide * 0.022),
+                        ),
                         actions: [
                           CupertinoButton(
+                            // borderRadius: BorderRadius.only(
+                            //   bottomLeft: Radius.circular(10),
+                            // ),
+
+                            padding: EdgeInsets.zero,
+                            // color: Colors.red,
                             child: Text('Yes'),
                             onPressed: () => SystemChannels.platform
                                 .invokeMethod('SystemNavigator.pop'),
                           ),
                           CupertinoButton(
+                            // borderRadius: BorderRadius.only(
+                            //   bottomRight: Radius.circular(10),
+                            // ),
+                            padding: EdgeInsets.zero,
+                            // color: Pallete.activeColor,
                             child: Text('No'),
                             onPressed: () => Navigator.pop(context),
                           )
