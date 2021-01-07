@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
+
 import 'package:todo_stream/model/todo.dart';
 import 'package:todo_stream/repository/todo_repository.dart';
 
@@ -26,6 +27,13 @@ class TodoBloc {
     _todoCountSink.add(res.length);
   }
 
+// var streamZip = Rx.zip<int,List<Todo>>(Stream<int> todoCountStream,Stream<List<Todo>> todos, (a, b) => a+b);
+
+  var streamZip = Rx.zipList([
+
+
+
+  ]);
   Future<List<Todo>> getTodoClone() async {
     List<Todo> result;
     result = await _todoRepository.getAllTodo();
@@ -88,6 +96,8 @@ class TodoBloc {
   }
 
 //completed task.........❤❤
+
+//Stream zipping
 
   dispose() {
     _todoController.close();

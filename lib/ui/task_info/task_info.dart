@@ -24,6 +24,7 @@ class _TaskInfoState extends State<TaskInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: Pallete.extraInactiveColor,
       body: Container(
         margin: EdgeInsets.symmetric(

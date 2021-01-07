@@ -43,19 +43,19 @@ class DateParser {
   // }
 
   static Stream<String> dateStream(String dateAdded) {
-    var parsedDate = DateTime.parse(dateAdded).toLocal().toUtc();
+    var parsedDate = DateTime.parse(dateAdded).toLocal();
     return Stream.periodic(
-      Duration(seconds: 1),
+      Duration(seconds: 2),
       (x) {
-        Duration dateDiff = DateTime.now().toLocal().difference(parsedDate);
-        var remDate = timeSinceCreated(dateDiff);
+        Duration remDate = DateTime.now().toLocal().difference(parsedDate);
+        // var remDate = timeSinceCreated(dateDiff);
         // return '${dateDiff.inMinutes.toString()}  minutes ago';
 
         var stringifiedHour = hourAndMinuteDigitFixer(parsedDate.hour);
         var minute = hourAndMinuteDigitFixer(parsedDate.minute);
         var amPm = amPmDetector(parsedDate.hour);
 
-        if (remDate >= 0) {
+        if (remDate.inDays >= 0) {
           return 'today $stringifiedHour:$minute:$amPm';
         } else {
           return "$remDate days ago $stringifiedHour:$minute:$amPm";

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_stream/pallete.dart';
 import 'package:todo_stream/ui/edit_page/edit_page.dart';
 import 'package:todo_stream/ui/home_page/home_page.dart';
 import 'package:todo_stream/ui/task_info/task_info.dart';
@@ -24,7 +25,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.green),
+        theme: ThemeData.dark().copyWith(
+            scaffoldBackgroundColor: Colors.green,
+            highlightColor: Pallete.activeColor),
         initialRoute: HomePage.id,
         routes: {
           HomePage.id: (context) => HomePage(),

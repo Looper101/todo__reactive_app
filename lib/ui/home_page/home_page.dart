@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,29 +67,89 @@ class _HomePageState extends State<HomePage> {
                       barrierDismissible: true,
                       context: context,
                       builder: (context) {
-                        return CupertinoAlertDialog(
-                          title: Column(
-                            children: [
-                              Text('Reset App?'),
-                              Divider(),
-                              Text('These action will delete every task '),
-                            ],
-                          ),
-                          actions: [
-                            CupertinoButton(
-                              onPressed: () {
-                                Provider.of<TodoBloc>(context, listen: false)
-                                    .clearDb();
-                                Navigator.pop(context);
-                              },
-                              child: Text('Yes'),
-                            ),
-                            CupertinoButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text('No'),
-                            )
-                          ],
-                        );
+                        return Platform.isIOS
+                            ? CupertinoAlertDialog(
+                                title: Column(
+                                  children: [
+                                    Text('Reset App?'),
+                                    Divider(),
+                                    Text(
+                                      'These action will delete every task ',
+                                      style: TextStyle(
+                                          fontSize:
+                                              DeviceSizeConfig.longestSide *
+                                                  0.022),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  CupertinoButton(
+                                    color: Pallete.inactiveColor,
+                                    onPressed: () {
+                                      Provider.of<TodoBloc>(context,
+                                              listen: false)
+                                          .clearDb();
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Yes'),
+                                  ),
+                                  CupertinoButton(
+                                    color: Pallete.inactiveColor,
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('No'),
+                                  ),
+                                ],
+                              )
+                            : AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor: Pallete.backgroundColor,
+                                title: Column(
+                                  children: [
+                                    Text(
+                                      'Reset App?',
+                                      style: TextStyle(
+                                          fontSize:
+                                              DeviceSizeConfig.longestSide *
+                                                  0.022,
+                                          fontFamily: 'opensans'),
+                                    ),
+                                    Divider(),
+                                    Text(
+                                      'These action will delete every task',
+                                      style: TextStyle(
+                                          fontSize:
+                                              DeviceSizeConfig.longestSide *
+                                                  0.022,
+                                          fontFamily: 'opensans'),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  CupertinoButton(
+                                    color: Pallete.warning,
+                                    onPressed: () {
+                                      Provider.of<TodoBloc>(context,
+                                              listen: false)
+                                          .clearDb();
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      'Yes',
+                                      style: TextStyle(
+                                          fontSize:
+                                              DeviceSizeConfig.longestSide *
+                                                  0.022,
+                                          fontFamily: 'opensans'),
+                                    ),
+                                  ),
+                                  CupertinoButton(
+                                    color: Pallete.activeColor,
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('No'),
+                                  ),
+                                ],
+                              );
                       },
                     );
                   },
@@ -101,36 +162,90 @@ class _HomePageState extends State<HomePage> {
                   onPress: () => showDialog(
                     context: context,
                     builder: (context) {
-                      return CupertinoAlertDialog(
-                        title: Text('Exit App'),
-                        content: Text(
-                          'This action will close the app',
-                          style: TextStyle(
-                              fontSize: DeviceSizeConfig.longestSide * 0.022),
-                        ),
-                        actions: [
-                          CupertinoButton(
-                            // borderRadius: BorderRadius.only(
-                            //   bottomLeft: Radius.circular(10),
-                            // ),
-
-                            padding: EdgeInsets.zero,
-                            // color: Colors.red,
-                            child: Text('Yes'),
-                            onPressed: () => SystemChannels.platform
-                                .invokeMethod('SystemNavigator.pop'),
-                          ),
-                          CupertinoButton(
-                            // borderRadius: BorderRadius.only(
-                            //   bottomRight: Radius.circular(10),
-                            // ),
-                            padding: EdgeInsets.zero,
-                            // color: Pallete.activeColor,
-                            child: Text('No'),
-                            onPressed: () => Navigator.pop(context),
-                          )
-                        ],
-                      );
+                      return Platform.isIOS
+                          ? CupertinoAlertDialog(
+                              title: Column(
+                                children: [
+                                  Text('Exit App'),
+                                  Text(
+                                    'This action will close the app',
+                                    style: TextStyle(
+                                        fontSize: DeviceSizeConfig.longestSide *
+                                            0.022,
+                                        fontFamily: 'opensans'),
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                CupertinoButton(
+                                  color: Pallete.warning,
+                                  padding: EdgeInsets.zero,
+                                  child: Text(
+                                    'Yes',
+                                    style: TextStyle(
+                                        fontSize: DeviceSizeConfig.longestSide *
+                                            0.022,
+                                        fontFamily: 'opensans'),
+                                  ),
+                                  onPressed: () => SystemChannels.platform
+                                      .invokeMethod('SystemNavigator.pop'),
+                                ),
+                                CupertinoButton(
+                                  color: Pallete.inactiveColor,
+                                  padding: EdgeInsets.zero,
+                                  child: Text(
+                                    'No',
+                                    style: TextStyle(
+                                        fontSize: DeviceSizeConfig.longestSide *
+                                            0.022,
+                                        fontFamily: 'opensans'),
+                                  ),
+                                  onPressed: () => Navigator.pop(context),
+                                )
+                              ],
+                            )
+                          : AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              backgroundColor: Pallete.backgroundColor,
+                              title: Column(
+                                children: [
+                                  Text('Exit App'),
+                                ],
+                              ),
+                              content: Text(
+                                'This action will close the app',
+                                style: TextStyle(
+                                    fontSize:
+                                        DeviceSizeConfig.longestSide * 0.022,
+                                    fontFamily: 'opensans'),
+                              ),
+                              actions: [
+                                CupertinoButton(
+                                  color: Pallete.warning,
+                                  child: Text(
+                                    'Yes',
+                                    style: TextStyle(
+                                        fontSize: DeviceSizeConfig.longestSide *
+                                            0.022,
+                                        fontFamily: 'opensans'),
+                                  ),
+                                  onPressed: () => SystemChannels.platform
+                                      .invokeMethod('SystemNavigator.pop'),
+                                ),
+                                CupertinoButton(
+                                  color: Pallete.activeColor,
+                                  child: Text(
+                                    'No',
+                                    style: TextStyle(
+                                        fontSize: DeviceSizeConfig.longestSide *
+                                            0.022,
+                                        fontFamily: 'opensans'),
+                                  ),
+                                  onPressed: () => Navigator.pop(context),
+                                )
+                              ],
+                            );
                     },
                   ),
                 ),

@@ -7,7 +7,7 @@ IconButton buildIconButton(
     padding: EdgeInsets.zero,
     icon: icon,
     color: color,
-    iconSize: DeviceSizeConfig.longestSide * 0.028,
+    iconSize: DeviceSizeConfig.longestSide * 0.03,
     onPressed: onPressed,
   );
 }

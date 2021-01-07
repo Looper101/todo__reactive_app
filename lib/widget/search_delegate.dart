@@ -87,6 +87,15 @@ class CustomDelegate extends SearchDelegate<Todo> {
         final results = snapshot.data.where((element) =>
             element.description.toLowerCase().contains(query.toLowerCase()));
 
+        if (results.length < 0) {
+          return Text(
+            'No result',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          );
+        }
+
         return ListView(
           children: results
               .map<Widget>(

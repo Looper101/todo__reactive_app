@@ -18,114 +18,115 @@ Widget taskList(BuildContext context) {
       }
       if (snapshot.hasData) {
         return snapshot.data.isNotEmpty
-            ? ListView.builder(
-                itemCount: 0 + snapshot.data.length,
-                itemBuilder: (context, index) {
-                  Todo todo = snapshot.data[index];
+            ? Scrollbar(
+                thickness: 3.0,
+                child: ListView.builder(
+                  itemCount: 0 + snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    Todo todo = snapshot.data[index];
 
-                  return Dismissible(
-                    background: Container(
-                      padding: EdgeInsets.only(left: 10),
-                      color: Colors.blueGrey.withOpacity(0.4),
-                      alignment: Alignment.centerLeft,
-                      child: Icon(Icons.delete, color: Colors.white),
-                    ),
-                    secondaryBackground: Container(
-                      padding: EdgeInsets.only(right: 10),
-                      color: Colors.blueGrey.withOpacity(0.4),
-                      alignment: Alignment.centerRight,
-                      child: Icon(Icons.delete, color: Colors.white),
-                    ),
-                    key: ObjectKey(todo),
-                    direction: DismissDirection.horizontal,
-                    onDismissed: (direction) {
-                      //either of the direction will trigger this
-                      if (direction == DismissDirection.startToEnd ||
-                          direction == DismissDirection.endToStart) {
-                        Provider.of<TodoBloc>(context, listen: false)
-                            .deleteTodo(todo.id);
-                      }
-                      return null;
-                    },
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, EditPage.id,
-                          arguments: todo),
-                      child: Card(
-                        color: todo.isDone
-                            ? Pallete.activeColor
-                            : Pallete.inactiveColor,
-                        margin: EdgeInsets.only(
-                          top: index == 0 ? 15 : 9,
-                          bottom: 9,
-                          left: 10,
-                          right: 10,
-                        ),
-                        elevation: 7,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: ListTile(
-                          subtitle: StreamBuilder<String>(
-                              stream: DateParser.dateStream(todo.addDate),
-                              initialData: '',
-                              builder: (context, snapshot) {
-                                return Text(
-                                  // DateParser.fixIncomingDateFromDb(todo.addDate)
-                                  snapshot.data.toString(),
-                                  style: TextStyle(
-                                    fontSize:
-                                        DeviceSizeConfig.longestSide * 0.02,
-                                    fontFamily: 'opensans',
-                                    fontWeight: FontWeight.w600,
-                                    color: todo.isDone
-                                        ? Colors.white70
-                                        : Colors.blueGrey,
-                                  ),
-                                );
-                              }),
-                          leading: GestureDetector(
-                            onTap: () {
-                              todo.isDone = !todo.isDone;
-
-                              Provider.of<TodoBloc>(context, listen: false)
-                                  .updateTodo(todo);
-                            },
-                            child: Container(
-                              child: customWidget(isDone: todo.isDone),
-                            ),
+                    return Dismissible(
+                      background: Container(
+                        padding: EdgeInsets.only(left: 10),
+                        alignment: Alignment.centerLeft,
+                        child: Icon(Icons.delete, color: Colors.white),
+                      ),
+                      secondaryBackground: Container(
+                        padding: EdgeInsets.only(right: 10),
+                        alignment: Alignment.centerRight,
+                        child: Icon(Icons.delete, color: Colors.white),
+                      ),
+                      key: ObjectKey(todo),
+                      direction: DismissDirection.horizontal,
+                      onDismissed: (direction) {
+                        //either of the direction will trigger this
+                        if (direction == DismissDirection.startToEnd ||
+                            direction == DismissDirection.endToStart) {
+                          Provider.of<TodoBloc>(context, listen: false)
+                              .deleteTodo(todo.id);
+                        }
+                        return null;
+                      },
+                      child: GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, EditPage.id,
+                            arguments: todo),
+                        child: Card(
+                          color: todo.isDone
+                              ? Pallete.activeColor
+                              : Pallete.inactiveColor,
+                          margin: EdgeInsets.only(
+                            top: index == 0 ? 15 : 9,
+                            bottom: 9,
+                            left: 10,
+                            right: 10,
                           ),
-                          trailing: IconButton(
-                            tooltip: 'Delete',
-                            icon: Icon(
-                              Icons.cancel_outlined,
-                              color: todo.isDone
-                                  ? Color(0xFF242433)
-                                  : Color(0xFF38BA6C),
-                            ),
-                            onPressed: () =>
+                          elevation: 7,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: ListTile(
+                            subtitle: StreamBuilder<String>(
+                                stream: DateParser.dateStream(todo.addDate),
+                                initialData: '',
+                                builder: (context, snapshot) {
+                                  return Text(
+                                    // DateParser.fixIncomingDateFromDb(todo.addDate)
+                                    snapshot.data.toString(),
+                                    style: TextStyle(
+                                      fontSize:
+                                          DeviceSizeConfig.longestSide * 0.02,
+                                      fontFamily: 'opensans',
+                                      fontWeight: FontWeight.w600,
+                                      color: todo.isDone
+                                          ? Colors.white70
+                                          : Colors.blueGrey,
+                                    ),
+                                  );
+                                }),
+                            leading: GestureDetector(
+                              onTap: () {
+                                todo.isDone = !todo.isDone;
+
                                 Provider.of<TodoBloc>(context, listen: false)
-                                    .deleteTodo(todo.id),
-                          ),
-                          title: Text(
-                            snapshot.data[index].description,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: DeviceSizeConfig.longestSide * 0.025,
-                              color: todo.isDone
-                                  ? Colors.white
-                                  : Color(0xFF38BA6C),
-                              decoration: todo.isDone
-                                  ? TextDecoration.lineThrough
-                                  : null,
-                              fontFamily: 'opensans',
+                                    .updateTodo(todo);
+                              },
+                              child: Container(
+                                child: customWidget(isDone: todo.isDone),
+                              ),
+                            ),
+                            trailing: IconButton(
+                              tooltip: 'Delete',
+                              icon: Icon(
+                                Icons.cancel_outlined,
+                                color: todo.isDone
+                                    ? Color(0xFF242433)
+                                    : Color(0xFF38BA6C),
+                              ),
+                              onPressed: () =>
+                                  Provider.of<TodoBloc>(context, listen: false)
+                                      .deleteTodo(todo.id),
+                            ),
+                            title: Text(
+                              snapshot.data[index].description,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: DeviceSizeConfig.longestSide * 0.025,
+                                color: todo.isDone
+                                    ? Colors.white
+                                    : Color(0xFF38BA6C),
+                                decoration: todo.isDone
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                fontFamily: 'opensans',
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               )
             : Center(
                 child: Text(
